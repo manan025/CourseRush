@@ -27,15 +27,7 @@ prev_available_mail = ""
 
 while True:
     if x != "n" and x != 'no':
-        # chrome_options.add_argument("--headless=new")
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")  # Important for VPS
-        chrome_options.add_argument("--disable-dev-shm-usage")  # Important for VPS
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--remote-debugging-port=9222")
-        # Additional VPS-friendly options
-        chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--disable-plugins")
+        chrome_options.add_argument("--headless=new")
 
     driver = webdriver.Chrome(options=chrome_options)
 
