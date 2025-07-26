@@ -14,28 +14,32 @@ load_dotenv()
 
 chrome_options = Options()
 x = input("Enable headless mode [Y/n]: ").lower()
-if x != "n" and x != 'no':
-    chrome_options.add_argument("--headless=new")
-
-driver = webdriver.Chrome(options=chrome_options)
-
-landing = r"https://prodweb.snu.in/psp/CSPROD/EMPLOYEE/HRMS/?cmd=login"
-driver.get(landing)
 
 delay = 3
 
-exe_delay = 1000 * 60 * float(os.getenv("DELAY")) if os.getenv("DELAY") is not None else 5
+exe_delay = int(os.getenv("DELAY")) if os.getenv("DELAY") is not None else 5
 
 ## credentials
 userid = os.getenv("SNUID")
 password = os.getenv("SNUPWD")
 
+prev_available_mail = ""
+
 while True:
+    if x != "n" and x != 'no':
+        chrome_options.add_argument("--headless=new")
+
+    driver = webdriver.Chrome(options=chrome_options)
+
+    landing = r"https://prodweb.snu.in/psp/CSPROD/EMPLOYEE/HRMS/?cmd=login"
+    driver.get(landing)
+
     time.sleep(delay)
 
     # Login
     driver.find_element(By.ID, "userid").send_keys(userid)
     driver.find_element(By.ID, "pwd").send_keys(password)
+    time.sleep(delay)
     driver.find_element(By.NAME, "Submit").click()
 
     time.sleep(delay)
@@ -69,19 +73,33 @@ while True:
     frame = driver.find_element(By.ID, "ptifrmtgtframe")
     driver.switch_to.frame(frame)
 
-    classes = {'1685': "", '1679': "", '1682':""}
-    auto_swap = []
-    available = []
+    # classes = {'1533': "", '1679': "", '1682':""}
+    classes_not = {'1533': "", '1539': '', '1541': '', '1546': '', '1547': '', '1551': '', '1553': '', '1556': '', '1557': '', '1559': '', '1561': '', '1562': '', '1565': '', '1566': '', '1569': '', '1570': ''} # swayam course
+    # auto_swap = []
     enrolled = False
 
-    for c in classes.keys():
-        try:
-            x = driver.find_element(By.LINK_TEXT, c)
-            available.append(c)
-            mail.send(c, classes[c])
+    xpath_total = '/html/body/form/div[4]/table/tbody/tr/td/div/table/tbody/tr[9]/td[2]/div/table/tbody/tr/td/table/tbody/tr[4]/td[2]/div/table/tbody/tr[1]/td'
+    total = int(driver.find_element(By.XPATH, xpath_total).text.strip().split()[0])
+    xpath_classes = [f'//*[@id="MTG_CLASS_NBR${i}"]' for i in range(total)]
+    available = [driver.find_element(By.XPATH, i).text for i in xpath_classes]
 
+    available_mail = ""
+    for i in available:
+        if i not in classes_not.keys():
+            available_mail += i + ", "
+
+    if available_mail == prev_available_mail:
+        available_mail = ""
+    if available_mail != "":
+        try:
+            mail.send(available_mail, "REGISTER NOW.")
+            prev_available_mail = available_mail
         except Exception as e:
-            pass
+            print(e)
+    else:
+        mails_sent = False
+
+    driver.close()
 
 
     print(available)
