@@ -12,7 +12,7 @@ PASSWORD = os.getenv("EMAILPWD")
 
 SMTPserver = 'smtp.mail.me.com'
 sender = os.getenv("SENDER") if os.getenv("SENDER") is not None else USERNAME
-destination = ['test@mrkr.me', 'mananman23@gmail.com']
+destination = [] # list of email ids
 
 
 # typical values for text_subtype are plain, html, xml
@@ -40,7 +40,7 @@ Course available: {classS}: {name}
             conn.quit()
 
     except Exception as e:
-        sys.exit( "mail failed; %s %s" % ("CUSTOM_ERROR", e) ) # give an error message
+        print( "mail failed; %s %s" % ("CUSTOM_ERROR", e) ) # give an error message
 
 
 
