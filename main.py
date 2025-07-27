@@ -75,19 +75,21 @@ while True:
         driver.switch_to.frame(frame)
 
         # classes = {'1533': "", '1679': "", '1682':""}
-        classes_not = ['1533', '1536', '1539', '1541', '1546', '1547', '1551', '1553', '1556', '1557', '1558', '1559', '1561', '1562', '1565', '1566', '1569', '1570'] # swayam course
+        classes_not = ['1533', '1536', '1539', '1541', '1546', '1547', '1548', '1551', '1552', '1553', '1556', '1557', '1558', '1559', '1561', '1562', '1565', '1566', '1569', '1570'] # swayam course
         # auto_swap = []
         enrolled = False
 
         xpath_total = '/html/body/form/div[4]/table/tbody/tr/td/div/table/tbody/tr[9]/td[2]/div/table/tbody/tr/td/table/tbody/tr[4]/td[2]/div/table/tbody/tr[1]/td'
         total = int(driver.find_element(By.XPATH, xpath_total).text.strip().split()[0])
         xpath_classes = [f'//*[@id="MTG_CLASS_NBR${i}"]' for i in range(total)]
-        available = [driver.find_element(By.XPATH, i).text.strip() for i in xpath_classes]
+        xpath_names = [f'//*[@id="win1divSSR_CLSRSLT_WRK_GROUPBOX2GP${i}"]' for i in range(total)]
+        available = [(driver.find_element(By.XPATH, i).text.strip(), driver.find_element(By.XPATH, j).text.strip()) for i, j in zip(xpath_classes, xpath_names)]
 
-        available_mail = ""
-        for i in available:
+
+        available_mail = f""
+        for i, j in available:
             if i not in classes_not:
-                available_mail += i + ", "
+                available_mail += f"{i} {j}\n"
 
         if available_mail == prev_available_mail:
             available_mail = ""
@@ -103,10 +105,12 @@ while True:
         driver.close()
 
 
-        print(available)
+        print(f"{time.localtime().tm_hour}:{time.localtime().tm_min}:{time.localtime().tm_sec}:", [i[0] for i in available])
+        if available_mail != "":
+            print(f"AVAILABLE: {available_mail}")
         time.sleep(exe_delay)
     except Exception as e:
-        print("Error Occurred:", e)
+        print(f"{time.localtime().tm_hour}:{time.localtime().tm_min}:{time.localtime().tm_sec} Error Occurred:", e)
 
 # try:
 #     i = 0
