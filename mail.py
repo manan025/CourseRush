@@ -12,8 +12,7 @@ PASSWORD = os.getenv("EMAILPWD")
 
 SMTPserver = 'smtp.mail.me.com'
 sender = os.getenv("SENDER") if os.getenv("SENDER") is not None else USERNAME
-destination = ["mk979@snu.edu.in", "aa467@snu.edu.in", "ss691@snu.edu.in"] # list of email ids
-
+destination = [""] # list of email ids
 
 # typical values for text_subtype are plain, html, xml
 text_subtype = 'plain'
