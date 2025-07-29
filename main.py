@@ -91,6 +91,7 @@ while True:
             if i not in classes_not:
                 available_mail += f"{i} {j}\n"
 
+        available_log = available_mail
         if available_mail == prev_available_mail:
             available_mail = ""
         if available_mail != "":
@@ -107,7 +108,7 @@ while True:
 
         print(f"{time.localtime().tm_hour}:{time.localtime().tm_min}:{time.localtime().tm_sec}:", [i[0] for i in available])
         if available_mail != "":
-            print(f"AVAILABLE: {available_mail}")
+            print(f"AVAILABLE: {available_log}")
         time.sleep(exe_delay)
     except Exception as e:
         print(f"{time.localtime().tm_hour}:{time.localtime().tm_min}:{time.localtime().tm_sec} Error Occurred:", e)
