@@ -20,7 +20,8 @@ brew install geckodriver
 cp .env.example .env
 ```
 
-3. Add your target classes in main.py.
+3. Add the destination emails in [mail.py](mail.py) file. The `classes_not` variable in [main.py](main.py) contains the CCC that will not be monitored.
+
 
 
 ## Usage
