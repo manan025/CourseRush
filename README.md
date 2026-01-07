@@ -1,9 +1,18 @@
 # CourseRush
 A python script that sends mail if a course is available for registration on SNU's ERP.
+
+It has been checked to work on Pyton 3.14 with **GeckoDriver**. It may not work with Chrome.
+
+
 ## Installation & Setup
 1. Install the required packages
 ```bash
-pip install -r requirements.txt
+uv add -r requirements.txt
+```
+
+To install geckodriver using homebrew (macOS):
+```bash
+brew install geckodriver
 ```
 
 2. Create and initialize environment file
@@ -17,7 +26,7 @@ cp .env.example .env
 ## Usage
 1. Run the program
 ```bash
-python main.py
+uv run main.py
 ```
 
 ## Features

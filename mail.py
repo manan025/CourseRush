@@ -10,7 +10,7 @@ load_dotenv()
 USERNAME = os.getenv("EMAILID")
 PASSWORD = os.getenv("EMAILPWD")
 
-SMTPserver = 'smtp.mail.me.com'
+SMTPserver = os.getenv("SMTP_SERVER") or 'smtp.mail.me.com'
 sender = os.getenv("SENDER") if os.getenv("SENDER") is not None else USERNAME
 destination = [""] # list of email ids
 

@@ -1,0 +1,11 @@
+[project]
+name = "courserush"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.9"
+dependencies = [
+    "python-dotenv~=1.0.1",
+    "selenium~=4.27.1",
+    "selenium-stealth>=1.0.6",
+    "twilio>=9.7.0",
+]
