@@ -1,3 +1,6 @@
 .env
 .venv
 .idea
+test.py
+.DS_Store
+__pycache__/

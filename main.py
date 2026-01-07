@@ -11,7 +11,7 @@ import mail
 
 load_dotenv()
 
-x = input("Enable headless mode [Y/n]: ").lower()
+x = input("Enable headless mode [y/N]: ").lower()
 
 delay = 3
 
@@ -34,7 +34,7 @@ while True:
             from selenium.webdriver.firefox.service import Service as FirefoxService
             from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
             firefox_options = FirefoxOptions()
-            if x != "n" and x != 'no':
+            if x == "y" and x == 'yes':
                 firefox_options.add_argument("--headless")
             if os.getenv("FIREFOX_BINARY"):
                 firefox_options.binary_location = os.getenv("FIREFOX_BINARY")
@@ -47,7 +47,7 @@ while True:
         else:
             from selenium.webdriver.chrome.options import Options
             chrome_options = Options()
-            if x != "n" and x != 'no':
+            if x == "y" and x == 'yes':
                 chrome_options.add_argument("--headless=new")
             chrome_profile_path = os.path.join(profile_dir, "chrome_profile")
             chrome_options.add_argument(f"--user-data-dir={chrome_profile_path}")
